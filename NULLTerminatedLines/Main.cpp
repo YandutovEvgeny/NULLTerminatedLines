@@ -1,4 +1,4 @@
-#include<iostream>
+п»ї#include<iostream>
 #include<Windows.h>
 #include<string>
 using namespace std;
@@ -18,12 +18,12 @@ void main()
 	//char str[] = "Hello";
 	const int n = 20;
 	char str[n]{};
-	cout << "Введите строку: "; 
+	cout << "Р’РІРµРґРёС‚Рµ СЃС‚СЂРѕРєСѓ: "; 
 	//cin >> str;
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
-	cin.getline(str, n);  //Позволяет ввести с клавиатуры строку с пробелами
-	                      //str - строка, n - размер строки
+	cin.getline(str, n);  //РџРѕР·РІРѕР»СЏРµС‚ РІРІРµСЃС‚Рё СЃ РєР»Р°РІРёР°С‚СѓСЂС‹ СЃС‚СЂРѕРєСѓ СЃ РїСЂРѕР±РµР»Р°РјРё
+	                      //str - СЃС‚СЂРѕРєР°, n - СЂР°Р·РјРµСЂ СЃС‚СЂРѕРєРё
 	//cout << str << endl;
 	cout << StringLenth(str) << endl;
 	cout << to_upper(str) << endl;
