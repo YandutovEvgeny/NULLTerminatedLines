@@ -9,6 +9,8 @@ void to_lower(char str[]);
 void shrink(char str[]);
 void remove_symbol(char str[], const char symbol);
 bool is_palindrome(char str[]);
+bool is_int_number(char str[], char a, char b);
+bool is_bin_number(char str[], char a, char b);
 
 void main()
 {
@@ -16,12 +18,12 @@ void main()
 	//char str[] = { 'H', 'e', 'l', 'l', 'o', 0};
 	//char str[] = "Hello";
 	const int n = 256;
-	char str[n]{"Аргентина манит негра"};
+	char str[n]{};
 	cout << "Введите строку: "; 
 	//cin >> str;
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
-	//cin.getline(str, n);  //Позволяет ввести с клавиатуры строку с пробелами
+	cin.getline(str, n);  //Позволяет ввести с клавиатуры строку с пробелами
 	                      //str - строка, n - размер строки
 	cout << str << endl;
 	cout << "Длина строки: " << StringLenth(str) << " символов" << endl;
@@ -32,8 +34,12 @@ void main()
 	shrink(str);
 	cout << "Удаление лишних пробелов: " << str << endl;
 	cout << "Строка " << (is_palindrome(str) ? "" : "НЕ ") << "является палиндромом" << endl;
-	cout << str << endl;
-	//main();
+	//cout << str << endl;
+	cout << "десятичное 1b, двоичное 0b, шестнадчатеричное 0x " << endl;
+	cout << "Строка " << (is_int_number(str, '1', 'b') ? "" : "НЕ ")  << "является целым десятичным числом" << endl;
+	cout << "Строка " << (is_bin_number(str, '0', 'b') ? "" : "НЕ ")  << "является целым двоичным числом" << endl;
+	cout << is_bin_number(str, '0', 'b');
+	main();
 }
 int StringLenth(char str[])
 {
@@ -107,4 +113,44 @@ bool is_palindrome(char str[])
 	}
 	delete[] buffer;
 	return true;
+}
+bool is_int_number(char str[], char a, char b)
+{
+	if (str[0] == a && str[1] == b)
+	{
+		bool is_number = true;
+		for (int i = str[2]; str[i]; i++)
+		{
+			if ((str[i] >= '0' && str[i] <= '9') == false)return !is_number;
+			//if ((str[i] == '0' || str[i] == '1') == false)return !is_number;
+		}
+		return is_number;
+	}
+	else return false;
+}
+bool is_bin_number(char str[], char a, char b)
+{
+	//if (str[0] == a && str[1] == b)
+	//{
+	//	bool is_number = true;
+	//	for (int i = str[2]; str[i]; i++)
+	//	{
+	//		if ((str[i] == '0') || (str[i + 1] == '1'))/* == false*/ return true;
+	//	}
+	//	return false;
+	//}
+	//else return false;
+
+	if (str[0] == a && str[1] == b)
+	{
+		bool is_number = false;
+		for (int i = str[2]; str[i]; i++)
+		{
+			if (str[i] >= '2' && str[i] <= '9') return false;
+			if (((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'а' && str[i] <= 'я')) || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= 'А' && str[i] <= 'Я')) return false;
+			if (str[i] == '0' || str[i] == '1') return true;
+			//else return false;
+		}
+	}
+	else return false;
 }
