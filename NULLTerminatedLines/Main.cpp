@@ -9,8 +9,11 @@ void to_lower(char str[]);
 void shrink(char str[]);
 void remove_symbol(char str[], const char symbol);
 bool is_palindrome(char str[]);
-bool is_int_number(char str[], char a, char b);
-bool is_bin_number(char str[], char a, char b);
+bool is_int_number(char str[]);
+bool is_bin_number(char str[]);
+bool is_hex_number(char str[]);
+int to_int_number(char str[]);
+int bin_to_dec(char str[]);
 
 void main()
 {
@@ -34,18 +37,16 @@ void main()
 	shrink(str);
 	cout << "Удаление лишних пробелов: " << str << endl;
 	cout << "Строка " << (is_palindrome(str) ? "" : "НЕ ") << "является палиндромом" << endl;
-	//cout << str << endl;
-	cout << "десятичное 1b, двоичное 0b, шестнадчатеричное 0x " << endl;
-	cout << "Строка " << (is_int_number(str, '1', 'b') ? "" : "НЕ ")  << "является целым десятичным числом" << endl;
-	cout << "Строка " << (is_bin_number(str, '0', 'b') ? "" : "НЕ ")  << "является целым двоичным числом" << endl;
-	cout << is_bin_number(str, '0', 'b');
+	cout << "Строка " << (is_int_number(str) ? "" : "НЕ ") << "является целым десятичным числом" << endl;
+	cout << "Строка " << (is_bin_number(str) ? "" : "НЕ ") << "является двоичным числом" << endl;
+	cout << "Строка " << (is_hex_number(str) ? "" : "НЕ ") << "является шестнадцатеричным числом" << endl;
+	cout << "Десятчное число: " << to_int_number(str) << endl;
+	cout << "Двоичное число в десятичном формате: " << bin_to_dec(str) << endl;
 	main();
 }
 int StringLenth(char str[])
 {
 	int i = 0;
-	/*for (; str[i]; i++);
-	return i;*/
 	while (str[i] != '\0')i++;
 	return i;
 }
@@ -114,43 +115,53 @@ bool is_palindrome(char str[])
 	delete[] buffer;
 	return true;
 }
-bool is_int_number(char str[], char a, char b)
+bool is_int_number(char str[])
 {
-	if (str[0] == a && str[1] == b)
+	for (int i = 0; str[i]; i++)
 	{
-		bool is_number = true;
-		for (int i = str[2]; str[i]; i++)
-		{
-			if ((str[i] >= '0' && str[i] <= '9') == false)return !is_number;
-			//if ((str[i] == '0' || str[i] == '1') == false)return !is_number;
-		}
-		return is_number;
+		if (str[i] != '0' && str[i] != '1' && str[i] != '2' && str[i] != '3' && str[i] != '4' && str[i] != '5' && str[i] != '6' && str[i] != '7' && str[i] != '8' && str[i] != '9')return false;
 	}
-	else return false;
+	return true;
 }
-bool is_bin_number(char str[], char a, char b)
+bool is_bin_number(char str[])
 {
-	//if (str[0] == a && str[1] == b)
-	//{
-	//	bool is_number = true;
-	//	for (int i = str[2]; str[i]; i++)
-	//	{
-	//		if ((str[i] == '0') || (str[i + 1] == '1'))/* == false*/ return true;
-	//	}
-	//	return false;
-	//}
-	//else return false;
-
-	if (str[0] == a && str[1] == b)
+	for (int i = 0; str[i]; i++)
 	{
-		bool is_number = false;
-		for (int i = str[2]; str[i]; i++)
-		{
-			if (str[i] >= '2' && str[i] <= '9') return false;
-			if (((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'а' && str[i] <= 'я')) || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= 'А' && str[i] <= 'Я')) return false;
-			if (str[i] == '0' || str[i] == '1') return true;
-			//else return false;
-		}
+		if (str[i] != '0' && str[i] != '1')return false;
 	}
-	else return false;
+	return true;
+}
+bool is_hex_number(char str[])
+{
+	for(int i=0;str[i];i++)
+	{ 
+		if (str[i] < '0' || str[i] > '9' && str[i] < 'A' || str[i] > 'F' || str[i] < 'a' || str[i] > 'f')return false;
+	}
+	return true;
+}
+int to_int_number(char str[])
+{
+	int sum = 0;
+	if (is_int_number(str))
+	{
+		for (int i = 0; str[i]; i++)
+		{
+			sum = sum + ((str[i] - 48) * pow(10, str[i] - 1 - i));
+		}
+		return sum;
+	}
+	else return 0;
+}
+int bin_to_dec(char str[])
+{
+	int sum = 0;
+	if (is_bin_number(str))
+	{
+		for (int i = 0; str[i]; i++)
+		{
+			sum += ((str[i] - 48) * pow(2, str[i] - 2 - i));
+		}
+		return sum;
+	}
+	return 0;
 }
